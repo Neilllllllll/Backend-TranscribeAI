@@ -1,8 +1,14 @@
+# Charge les variables d'environnement
+from dotenv import load_dotenv
+load_dotenv(".env.dev")
+
 from app import create_app
+import os
 
+# Créer l'app
 app = create_app()
-
+# Lance l'app 
 if __name__ == "__main__":
-    # Change this in production
-    # app.run(debug = False, host='0.0.0.0', port=5000)
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    debug = os.getenv("DEBUG")
+    port = os.getenv("PORT")
+    app.run(debug=debug, host='0.0.0.0', port=port)
