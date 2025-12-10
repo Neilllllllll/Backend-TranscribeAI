@@ -10,7 +10,7 @@ def audio_middleware():
 
     # Vérifie que le fichier n'est pas vide
     if audio_file.filename == '':
-        error("Le fichier audio est vide", 400)
+        return error("Le fichier audio est vide", 400)
 
     # Vérifie le type MIME pour s'assurer que c'est bien un fichier audio
     if not audio_file.mimetype.startswith('audio/'):
