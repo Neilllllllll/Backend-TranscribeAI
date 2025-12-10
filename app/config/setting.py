@@ -1,7 +1,7 @@
 import os
 
 # Clé pour authentification
-API_KEY = os.getenv("API_KEY")
+X_API_KEY = os.getenv("X_API_KEY")
 # Clé pour appeler l'IA
 AI_API_KEY = os.getenv("AI_API_KEY")
 # URL de l'IA

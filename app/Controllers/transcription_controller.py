@@ -6,14 +6,14 @@ class TranscriptionController:
     @staticmethod
     def generate_transcription(request):
         try:
-            if "file" not in request.files:
+            if "audioFile" not in request.files:
                 return error("Missing audio file", 400)
 
-            audio = request.files["file"]
+            audio = request.files["audioFile"]
 
             text = TranscriptionService.transcribe_audio(audio)
 
-            return success({"transcription": text})
+            return success({"text": text})
 
         except Exception as e:
             return error(str(e), 500)
