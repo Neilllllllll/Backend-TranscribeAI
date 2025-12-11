@@ -7,8 +7,7 @@ class TranscriptionController:
     def generate_transcription(request):
         try:
             audio = request.files["audioFile"]
-            text = TranscriptionService.transcribe_audio(audio)
-            return success({"text": text})
-        
+            response = TranscriptionService.transcribe_audio(audio)
+            return success({"transcription" : response["transcription"]})
         except Exception as e:
-            return error(str(e), 500)
+            return error("Service IA injoignable", 500)

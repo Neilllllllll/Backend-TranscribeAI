@@ -3,7 +3,9 @@ from flask_cors import CORS
 from .Routes import register_routes
 from .Middlewares.logger_middleware import logger_middleware
 from .Middlewares.check_key_middleware import check_key_middleware
-from .config.setting import FRONTEND_URL
+from .Config.setting import FRONTEND_URL
+
+
 
 def create_app():
     app = Flask(__name__)

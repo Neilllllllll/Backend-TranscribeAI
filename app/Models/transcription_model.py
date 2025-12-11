@@ -1,4 +1,7 @@
-# Faire une classe transcription
+# Model de transcription
 
-class TranscriptionModel:
-    pass
+transcriptionModel = {
+    "data" : {
+        "transcription": ""
+    }
+}

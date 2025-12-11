@@ -1,20 +1,20 @@
 from flask import request
 from ..Helpers.responses import error
 
-def audio_middleware():
-    # check if 
+def checkIsAudio():
+    # Check if the 'audioFile' key is here
     if 'audioFile' not in request.files:
         return error("Aucun fichier audio fourni", 400)
 
     audio_file = request.files['audioFile']
 
-    # Vérifie que le fichier n'est pas vide
+    # Check si the file isn't empty
     if audio_file.filename == '':
         return error("Le fichier audio est vide", 400)
 
-    # Vérifie le type MIME pour s'assurer que c'est bien un fichier audio
+    # check the meta data
     if not audio_file.mimetype.startswith('audio/'):
         return error("Fichier non audio reçu : " + str(audio_file.mimetype), 400)
 
-    # Si tout est OK, on continue normalement
     print(f"Fichier audio reçu : {audio_file.filename} ({audio_file.mimetype})")
+

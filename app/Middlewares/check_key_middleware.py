@@ -1,6 +1,6 @@
 from flask import request, jsonify
 from ..Helpers.responses import success, error
-from ..config.setting import X_API_KEY
+from ..Config.setting import X_API_KEY
 
 def check_key_middleware():
     if request.method == "OPTIONS":
