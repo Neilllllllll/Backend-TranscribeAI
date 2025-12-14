@@ -10,13 +10,13 @@ class AudioManager:
 
     # Sauvegarde un fichier audio à l'emplacement spécifié
     def save_audio(self, file : str) -> str:
-        file_path = self.folder_path + '/temp_' + file.filename
+        file_path = os.path.join(self.folder_path, file.filename)
         file.save(file_path)
         return file_path
 
     # Supprime le fichier audio à l'emplacement spécifié
     def delete_audio(self, file_name : str)-> bool:
-        if os.path.exists(self.folder_path + '/' + file_name):
-            os.remove(self.folder_path + '/' + file_name)
+        if os.path.exists(os.path.join(self.folder_path, file_name)):
+            os.remove(os.path.join(self.folder_path,file_name))
             return True
         return False

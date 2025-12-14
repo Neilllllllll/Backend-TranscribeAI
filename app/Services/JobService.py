@@ -31,6 +31,10 @@ class JobService:
         self.db.session.commit()
         return job
     
+    def get_job_by_uuid(self, job_uuid):
+        job = JobModel.query.get(job_uuid)
+        return job
+    
     def delete_job(self, job_uuid):
         job = JobModel.query.get(job_uuid)
         if not job:

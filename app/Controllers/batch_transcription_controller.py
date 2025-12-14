@@ -16,13 +16,12 @@ def handleAudio():
     file_path = audio_manager.save_audio(audio_file)
 
     # Créer une entrée job dans la base de données avec le statut "en attente"
-    job_service.create_job(job_id, file_path, "None", "PENDING")
+    job_service.create_job(job_id, file_path, None, "PENDING")
 
     # Enqueue le job dans redis
     redis_queue_service.enqueue_job(job_id)
 
     return Helpers.success({"job_id": job_id, "status" : "Votre demande est dans la file d'attente"}, 200)
-
 
 def getTranscriptionByUuid():
     pass

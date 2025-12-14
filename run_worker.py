@@ -1,15 +1,20 @@
 import time
-from app import create_app
-from app.config import AUDIO_STORAGE_FOLDER_NAME
-from app.Services import redis_queue_service, job_service, whisper_batch_service, audio_manager
+from app import create_app_worker
+from app.Config.WorkerConfig import WorkerConfig
 
 def worker_loop():
     while True:
+        redis_queue_service = app.extensions['redis_queue_service']
+        job_service = app.extensions['job_service']
+        audio_manager = app.extensions['audio_manager']
+        whisper_batch_service = app.extensions['transcription_service']
+
         # Récupérer un job de la file d'attente Redis (bloquant)
         job_uuid = redis_queue_service.pop_job_blocking()
+        print(f"Traitement du job {job_uuid}...")
         
         # Mettre à jour le statut du job en "IN_PROGRESS"
-        job_service.update_status(job_uuid, "IN_PROGRESS")
+        job_service.update_status(job_uuid, "PROCESSING")
         
         try:
             # Récupérer le chemin du fichier audio depuis la base de données
@@ -18,7 +23,7 @@ def worker_loop():
 
             with open(audio_file_path, 'rb') as f:
                 audio_file = f.read()
-            
+
             # Envoyer le fichier audio au service Whisper pour transcription
             transcription = whisper_batch_service.send_to_whisper_service(audio_file)
             
@@ -32,18 +37,19 @@ def worker_loop():
 
         finally:
             # Supprimer le fichier audio après traitement
-            audio_manager.delete_audio_file(audio_file_path)
+            if 'audio_file_path' in locals():
+                audio_manager.delete_audio(audio_file_path)
 
         # Petite pause pour éviter une boucle trop rapide
-        time.sleep(1)
+        time.sleep(app.config.get("WORKER_LOOP_SLEEP_TIME", 1))
 
 if __name__ == "__main__":
-    # 2. On crée l'instance de l'app
-    app = create_app()
+    # 1. On crée l'application Flask avec la configuration du worker
+    app = create_app_worker(WorkerConfig)
 
-    # 3. On active le contexte de l'application
+    # 2. On entre dans le contexte de l'application Flask
     # Cela permet d'accéder à current_app.config, à la BDD, et charge les variables d'env
     with app.app_context():
         print("🚀 Worker démarré avec le contexte de l'application Flask.")
-        print(f"📂 Dossier Audio configuré : {app.config.get('AUDIO_STORAGE_FOLDER_NAME')}") # Debug
-    worker_loop()
+        print(f"📂 Dossier Audio configuré : {app.config.get('AUDIO_STORAGE_PATH')}")
+        worker_loop()
