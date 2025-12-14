@@ -1,20 +1,10 @@
-import os
+import os 
 
-try:
-    # Clé pour authentification
-    X_API_KEY = os.getenv("X_API_KEY")
-    # Clé pour appeler l'IA
-    AI_API_KEY = os.getenv("AI_API_KEY")
-    # URL de l'IA
-    AI_URL = os.getenv("AI_URL")
-    # URL du front
-    FRONTEND_URL=os.getenv("FRONTEND_URL")
-    # Dossier où les audio seront temporairement stockés
-    AUDIO_STORAGE_FOLDER_NAME=os.getenv("AUDIO_STORAGE_FOLDER_NAME")
-    # URL de la base de données des jobs
-    DB_URL = os.getenv("DB_URL")
-    # URL de Redis
-    REDIS_URL = os.getenv("REDIS_URL")
-
-except:
-    print("Des constantes sont manquantes (variable d'env)")
+AI_URL = os.getenv('AI_URL', 'http://localhost:5001/api/transcribe')
+DB_URL = os.getenv('DB_URL', 'sqlite:///app.db')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:3000')
+AUDIO_STORAGE_PATH = os.getenv('AUDIO_STORAGE_PATH', './audio_files')
+WHISPER_SERVICE_URL = os.getenv('WHISPER_SERVICE_URL', 'http://localhost:5001/api/transcribe')
+REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+SECRET_KEY = os.getenv('SECRET_KEY', 'your_secret_key')
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
