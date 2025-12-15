@@ -2,7 +2,8 @@ from flask import request
 import app.Helpers as Helpers
 from flask import current_app
 
-def handleAudio():
+# Créer un job et retourne son uuid
+def createJob():
     audio_manager = current_app.extensions['audio_manager']
     job_service = current_app.extensions['job_service']
     redis_queue_service = current_app.extensions['redis_queue_service']
@@ -21,13 +22,13 @@ def handleAudio():
     # Enqueue le job dans redis
     redis_queue_service.enqueue_job(job_id)
 
-    return Helpers.success({"job_id": job_id, "status" : "Votre demande est dans la file d'attente"}, 200)
+    return Helpers.success({"job_uuid": job_id, "status" : "Votre demande est dans la file d'attente"}, 200)
 
 # Récupérer la transcription par UUID
 def getTranscriptionByUuid():
 
     # Récupérer l'UUID du job depuis les paramètres de la requête
-    job_uuid = request.args.get('uuid')
+    job_uuid = request.args.get('job_uuid')
     if not job_uuid:
         return Helpers.error("Missing job_id parameter", 400)
     # Contacter le service de gestion des jobs pour obtenir le statut et la transcription

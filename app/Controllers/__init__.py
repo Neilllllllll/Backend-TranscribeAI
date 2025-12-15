@@ -1,1 +1,1 @@
-from app.Controllers.batch_transcription_controller import handleAudio, getTranscriptionByUuid
+from app.Controllers.batch_transcription_controller import createJob, getTranscriptionByUuid

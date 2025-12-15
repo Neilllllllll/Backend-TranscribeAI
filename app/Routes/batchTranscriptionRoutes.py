@@ -4,10 +4,10 @@ import app.Middlewares as Middlewares
 
 batch_transcription_bp = Blueprint("batchTranscription", __name__)
 
-@batch_transcription_bp.post("/uploadAudio")
+@batch_transcription_bp.post("/createJob")
 @Middlewares.check_audio # Vérifie l'authenticité de l'audio
 def uploadAudio():
-    return Controllers.handleAudio()
+    return Controllers.createJob()
 
 @batch_transcription_bp.get("/result")
 def getTranscription():
