@@ -1,5 +1,5 @@
 import time
-from app import create_app_worker
+from app import create_app_worker_batch
 from app.Config.WorkerConfig import WorkerConfig
 
 def worker_loop():
@@ -44,7 +44,7 @@ def worker_loop():
 
 if __name__ == "__main__":
     # 1. On crée l'application Flask avec la configuration du worker
-    app = create_app_worker(WorkerConfig)
+    app = create_app_worker_batch(WorkerConfig)
 
     # 2. On entre dans le contexte de l'application Flask
     # Cela permet d'accéder à current_app.config, à la BDD, et charge les variables d'env

@@ -41,7 +41,7 @@ def create_app(config_class):
 
     return app
 
-def create_app_worker(config_class):
+def create_app_worker_batch(config_class):
 
     app = create_app(config_class)
 
