@@ -22,12 +22,12 @@ class JobService:
         self.db.session.commit()
         return job
 
-    def complete_job(self, job_uuid, transcript: str):
+    def complete_job(self, job_uuid, transcription: str):
         job = JobModel.query.get(job_uuid)
         if not job:
             return None
         job.status = "COMPLETED"
-        job.transcript = transcript
+        job.transcription = transcription
         self.db.session.commit()
         return job
     

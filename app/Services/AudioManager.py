@@ -15,8 +15,8 @@ class AudioManager:
         return file_path
 
     # Supprime le fichier audio à l'emplacement spécifié
-    def delete_audio(self, file_name : str)-> bool:
-        if os.path.exists(os.path.join(self.folder_path, file_name)):
-            os.remove(os.path.join(self.folder_path,file_name))
+    def delete_audio(self, file_path : str)-> bool:
+        if os.path.exists(file_path):
+            os.remove(file_path)
             return True
         return False

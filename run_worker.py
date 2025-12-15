@@ -22,10 +22,9 @@ def worker_loop():
             audio_file_path = job.file_path
 
             with open(audio_file_path, 'rb') as f:
-                audio_file = f.read()
-
-            # Envoyer le fichier audio au service Whisper pour transcription
-            transcription = whisper_batch_service.send_to_whisper_service(audio_file)
+                audio_file = f
+                # Envoyer le fichier audio au service Whisper pour transcription
+                transcription = whisper_batch_service.send_to_whisper_service(audio_file)
             
             # Mettre à jour le job avec la transcription et le statut "COMPLETED"
             job_service.complete_job(job_uuid, transcription)
