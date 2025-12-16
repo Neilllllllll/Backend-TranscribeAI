@@ -227,4 +227,12 @@ Ajoute une tâche de transcription audio dans la queue Redis afin d’être trai
 
 > ⏳ Le client est responsable du polling de cet endpoint jusqu’à la complétion du job.(je suis conscient que ça n'est pas la meilleure methode ici mais pour l'instant c'est fonctionnel et ça sera à améliorer surement par websocket)
 
+## Récupérer le projet
+
+initialiser redis
+initialiser postregres
+lancer le worker
+lancer l'api
+modifier les variables d'env
+
 
