@@ -27,6 +27,22 @@ def create_app(config_class):
     # Initialisation du service de gestion des jobs
     app.extensions['job_service'] = JobService(db)
 
+    # On tente de créer la table job avec une boucle de reconnexion
+    with app.app_context():
+        retries = 5
+        while retries > 0:
+            try:
+                db.create_all()
+                print("Base de données initialisée avec succès.")
+                break
+            except OperationalError:
+                retries -= 1
+                print(f"Postgres n'est pas prêt... Nouvelle tentative dans 2s ({retries} essais restants)")
+                time.sleep(2)
+
+        if retries <= 0:
+            print("Erreur : Impossible de se connecter à Postgres après plusieurs tentatives.")
+
     # Initialisation du service de gestion des fichiers audio
     app.extensions['audio_manager'] = AudioManager(app.config['AUDIO_STORAGE_PATH'])
 

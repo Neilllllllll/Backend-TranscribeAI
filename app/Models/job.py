@@ -4,9 +4,6 @@ from app import db
 
 class Job(db.Model):
     __tablename__ = "job"
-    # Specifie le le schema "Queue" pour cette table
-    __table_args__ = {"schema": "Queue"}
-
     uuid = db.Column(db.String(255), primary_key=True)
     status = db.Column(
         Enum("PENDING", "PROCESSING", "COMPLETED", "FAILED", name="job_status"),
