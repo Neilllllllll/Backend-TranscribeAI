@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 5000
 
 # Définir la commande de lancement de l'API
-CMD ["python", "run_api.py"]
+ENTRYPOINT ["python", "run_api.py"]

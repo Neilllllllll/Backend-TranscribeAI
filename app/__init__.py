@@ -33,9 +33,7 @@ def create_app(config_class):
     # Initialisation du service de file d'attente Redis
     app.extensions['redis_queue_service'] = RedisQueueService(app.config['REDIS_URL'])
 
-
     # Load de toutes les routes
-
     from app.Routes import register_routes
     register_routes(app)
 
