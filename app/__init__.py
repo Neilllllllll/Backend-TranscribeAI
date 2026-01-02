@@ -6,6 +6,8 @@ from flask_cors import CORS
 load_dotenv()
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import OperationalError
+import time
 
 db = SQLAlchemy()
 
